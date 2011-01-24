@@ -260,6 +260,18 @@ function Underscore.funcs.slice(array, start_index, length)
 	return sliced_array
 end
 
+function Underscore.funcs.py_slice(a, s, e)
+    local sliced_array = {}
+    s = s or 1
+    e = e or #a
+    s = math.max(s < 0 and (#a + s) or s, 1)
+    e = math.min(e < 0 and (#a + e) or e, #a)
+    for i = s, e do
+        sliced_array[#sliced_array+1] = a[i]
+    end
+    return sliced_array
+end
+
 function Underscore.funcs.flatten(array)
 	local all = {}
 	
@@ -294,6 +306,17 @@ end
 
 function Underscore.funcs.join(array, separator)
 	return table.concat(array, separator)
+end
+
+function Underscore.funcs.zip(...)
+    local results = {}
+    local largest = Underscore.funcs.max(arg, function (e) return #e end)
+    for i = 1, #largest do
+        Underscore.funcs.push(results, Underscore.funcs.map(arg, function (e)
+            return e[i]
+        end))
+    end
+    return results
 end
 
 -- objects

@@ -301,6 +301,17 @@ function Underscore.funcs.flatten(array)
 	return all
 end
 
+function Underscore.funcs.zip(...)
+    local results = {}
+    local smallest = Underscore.funcs.min(arg, function (e) return #e end)
+    for i = 1, #smallest do
+        Underscore.funcs.push(results, Underscore.funcs.map(arg, function (e)
+            return e[i]
+        end))
+    end
+    return results
+end
+
 function Underscore.funcs.push(array, item)
 	table.insert(array, item)
 	return array
@@ -321,17 +332,6 @@ end
 
 function Underscore.funcs.join(array, separator)
 	return table.concat(array, separator)
-end
-
-function Underscore.funcs.zip(...)
-    local results = {}
-    local smallest = Underscore.funcs.min(arg, function (e) return #e end)
-    for i = 1, #smallest do
-        Underscore.funcs.push(results, Underscore.funcs.map(arg, function (e)
-            return e[i]
-        end))
-    end
-    return results
 end
 
 -- objects

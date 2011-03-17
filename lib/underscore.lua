@@ -301,6 +301,22 @@ function Underscore.funcs.flatten(array)
 	return all
 end
 
+function Underscore.funcs.without(array, unwanted)
+    return Underscore.funcs.reject(array, function(e)
+        return e == unwanted
+    end)
+end
+
+function Underscore.funcs.uniq(array)
+    return Underscore.funcs.reduce(array, {}, function(memo, e)
+        if not Underscore.funcs.include(memo, e) then
+            return Underscore.funcs.push(memo, e)
+        else
+            return memo
+        end
+    end)
+end
+
 function Underscore.funcs.zip(...)
     local results = {}
     local smallest = Underscore.funcs.min(arg, function (e) return #e end)

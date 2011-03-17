@@ -249,6 +249,33 @@ function Underscore.funcs.rest(array, index)
 	return rest
 end
 
+function Underscore.funcs.last(array, n)
+    if n == nil then
+        return array[#array]
+    else
+        local first = {}
+        local i = 1
+        local n = math.max(1, #array - n + 1)
+        for j = n, #array do
+            first[i] = array[j]
+            i = i + 1
+        end
+        return first
+    end
+end
+
+function Underscore.funcs.compact(array)
+    local compacted = {}
+    local sub = 1
+    for i, val in pairs(array) do
+        if val then
+            compacted[sub] = val
+            sub = sub + 1
+        end
+    end
+    return compacted
+end
+
 function Underscore.funcs.slice(array, start_index, length)
 	local sliced_array = {}
 	
@@ -258,18 +285,6 @@ function Underscore.funcs.slice(array, start_index, length)
 		sliced_array[#sliced_array+1] = array[i]
 	end
 	return sliced_array
-end
-
-function Underscore.funcs.py_slice(a, s, e)
-    local sliced_array = {}
-    s = s or 1
-    e = e or #a
-    s = math.max(s < 0 and (#a + s) or s, 1)
-    e = math.min(e < 0 and (#a + e) or e, #a)
-    for i = s, e do
-        sliced_array[#sliced_array+1] = a[i]
-    end
-    return sliced_array
 end
 
 function Underscore.funcs.flatten(array)
@@ -310,8 +325,8 @@ end
 
 function Underscore.funcs.zip(...)
     local results = {}
-    local largest = Underscore.funcs.max(arg, function (e) return #e end)
-    for i = 1, #largest do
+    local smallest = Underscore.funcs.min(arg, function (e) return #e end)
+    for i = 1, #smallest do
         Underscore.funcs.push(results, Underscore.funcs.map(arg, function (e)
             return e[i]
         end))

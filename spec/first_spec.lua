@@ -11,6 +11,7 @@ describe["_.first"] = function()
 		it["should return an array with the first n items"] = function()
 			input = { 1,2,3,4 }
 			result = _.first(input,2)
+            _(result):each(print)
 			expect(result).should_equal {1,2}
 		end
 	end

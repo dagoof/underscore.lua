@@ -317,6 +317,16 @@ function Underscore.funcs.uniq(array)
     end)
 end
 
+function Underscore.funcs.intersect(...)
+    local intersection = {}
+    local first, rest = Underscore.funcs.first(arg), Underscore.funcs.rest(arg)
+    return Underscore.funcs.filter(Underscore.funcs.uniq(first), function(e)
+        return Underscore.funcs.every(rest, function(other)
+            return Underscore.funcs.include(other, e)
+        end)
+    end)
+end
+
 function Underscore.funcs.zip(...)
     local results = {}
     local smallest = Underscore.funcs.min(arg, function (e) return #e end)

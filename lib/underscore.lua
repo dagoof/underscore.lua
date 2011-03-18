@@ -338,6 +338,24 @@ function Underscore.funcs.zip(...)
     return results
 end
 
+function Underscore.funcs.index_of(array, item)
+    for i = 1, #array do
+        if array[i] == item then
+            return i
+        end
+    end
+    return false
+end
+
+function Underscore.funcs.last_index_of(array, item)
+    for i = #array, 1, -1 do
+        if array[i] == item then
+            return i
+        end
+    end
+    return false
+end
+
 function Underscore.funcs.push(array, item)
 	table.insert(array, item)
 	return array
